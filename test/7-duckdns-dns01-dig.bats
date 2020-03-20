@@ -6,7 +6,7 @@ load '/getssl/test/test_helper.bash'
 
 
 
-@test "Create new certificate using staging server and DuckDNS" {
+@test "Create new certificate using staging server, dig and DuckDNS" {
     if [ -z "$STAGING" ]; then
         skip "Running internal tests, skipping external test"
     fi
@@ -21,7 +21,7 @@ load '/getssl/test/test_helper.bash'
     refute_output --regexp '[Ww][Aa][Rr][Nn][Ii][Nn][Gg]'
 }
 
-@test "Force renewal of certificate using staging server and DuckDNS" {
+@test "Force renewal of certificate using staging server, dig and DuckDNS" {
     if [ -z "$STAGING" ]; then
         skip "Running internal tests, skipping external test"
     fi
