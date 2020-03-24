@@ -234,7 +234,7 @@ CSR_SUBJECT="/"
 CURL_USERAGENT="${PROGNAME}/${VERSION}"
 DEACTIVATE_AUTH="false"
 DEFAULT_REVOKE_CA="https://acme-v02.api.letsencrypt.org"
-DNS_EXTRA_WAIT=""
+DNS_EXTRA_WAIT=60
 DNS_WAIT=10
 DOMAIN_KEY_LENGTH=4096
 DUAL_RSA_ECDSA="false"
@@ -1205,7 +1205,10 @@ get_auth_dns() { # get the authoritative dns server for a domain (sets primary_n
     fi
   fi
 
-  error_exit "couldn't find primary DNS server - please set PUBLIC_DNS_SERVER or AUTH_DNS_SERVER in config"
+  # ubuntu dnsutils has a basic version of nslookup which doesn't support -debug, print a warning in this case
+  # This means getssl cannot check that the DNS record has been updated on the primary name server
+  info "Warning: Couldn't find primary DNS server - please set PUBLIC_DNS_SERVER or AUTH_DNS_SERVER in config"
+  info "This means getssl cannot check the DNS entry has been updated"
 }
 
 get_certificate() { # get certificate for csr, if all domains validated.
